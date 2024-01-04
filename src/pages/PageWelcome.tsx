@@ -25,7 +25,7 @@ export const PageWelcome = () => {
 			const response = await axios.get(`${urlBackend}/frameworks`);
 			setFrameworks(response.data);
 		})();
-	});
+	}, []);
 
 	return (
 		<>
