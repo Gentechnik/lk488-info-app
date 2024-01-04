@@ -1,14 +1,54 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+const urlBackend = `http://localhost:4899`;
+
+interface IFramework {
+	name: string;
+	url: string;
+	description: string;
+}
+
 export const PageWelcome = () => {
-	const [appName, setAppName] = useState(`Test`);
+	const [appName, setAppName] = useState(``);
+	const [frameworks, setFrameworks] = useState<IFramework[]>([]);
 
 	useEffect(() => {
 		(async () => {
-			const response = await axios.get(`https://localhost:4899`);
+			const response = await axios.get(urlBackend);
+			setAppName(response.data.appName);
+		})();
+	}, []);
+
+	useEffect(() => {
+		(async () => {
+			const response = await axios.get(`${urlBackend}/frameworks`);
+			setFrameworks(response.data);
 		})();
 	});
 
-	return <p>This is the welcome page.</p>;
+	return (
+		<>
+			<p>This is the welcome Page</p>
+			<p>APPNAME: {appName}</p>
+			<div>
+				FRAMEWORKS:
+				<ul className="list-disc ml-6">
+					{frameworks.map((framework, index) => {
+						return (
+							<li key={index} className="flex gap-3">
+								<a
+									href={framework.url}
+									className="underline font-bold"
+								>
+									{framework.name}
+								</a>
+								<span>{framework.description}</span>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		</>
+	);
 };
