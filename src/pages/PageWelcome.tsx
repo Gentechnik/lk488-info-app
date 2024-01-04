@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const urlBackend = `http://localhost:4899`;
+const urlBackend = `https://lk488-info-app-backend.onrender.com`;
 
 interface IFramework {
 	name: string;
